@@ -46,13 +46,13 @@ def update_csv_with_open_trades():
     data = []
     for trade in trades:
         data.append({
-            "Ticket": trade.ticket,
-            "Symbol": trade.symbol,
-            "Type": "Buy" if trade.type == mt5.ORDER_TYPE_BUY else "Sell",
-            "Volume": trade.volume,
-            "Price": trade.price_open,
+            "ticket": trade.ticket,
+            "symbol": trade.symbol,
+            "type": "Buy" if trade.type == mt5.ORDER_TYPE_BUY else "Sell",
+            "volume": trade.volume,
+            "price": trade.price_open,
             # "Profit": trade.profit,
-            "Time": trade.time
+            "time": trade.time
         })
 
     df = pd.DataFrame(data)
