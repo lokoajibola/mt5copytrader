@@ -2,6 +2,9 @@
 """
 Created on Sat Jan 25 19:38:58 2025
 
+CODE FOR THE SLAVE TO COPY METATRADER 5 TRADES FROM THE MASTER
+SYNCHRONIZES ITS TRADES WITH THE CSV FILE CREATED BY THE MASTER
+
 @author: LK
 """
 
@@ -152,19 +155,20 @@ def main():
             if current_data is not None:
                 master_trades = current_data.to_dict('records')
                 
-                # Synchronize trades
-                synchronize_trades(master_trades, slave_trades)
+                
             else:
                 print("Warning: current_data is None. Skipping conversion to dictionary.")
                 master_trades = []  # Fallback: Use an empty list or handle accordingly
-
             
+            # Synchronize trades
+            synchronize_trades(master_trades, slave_trades)            
 
             # Check if the file has been updated
-            if last_data is None or not current_data.equals(last_data):
-                print("Detected an update in the CSV file!")
-                print(current_data)
-                last_data = current_data
+            if current_data is not None and last_data is not None:
+                if not current_data.equals(last_data):
+                    print("Detected an update in the CSV file!")
+                    print(current_data)
+                    last_data = current_data
 
             time.sleep(5)  # Check for updates every 5 seconds
     except KeyboardInterrupt:
